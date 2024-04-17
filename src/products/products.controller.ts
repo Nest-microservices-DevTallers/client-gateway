@@ -1,31 +1,40 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import {
+  ParseIntPipe,
+  Controller,
+  Delete,
+  Param,
+  Patch,
+  Post,
+  Body,
+  Get,
+} from '@nestjs/common';
 
 @Controller('products')
 export class ProductsController {
-  constructor() { }
+  constructor() {}
 
   @Post()
   createProduct(@Body() body: any) {
-    return `Crea un producto`
+    return `Crea un producto`;
   }
 
   @Get()
   findAllProducts() {
-    return `Todos los productos`
+    return `Todos los productos`;
   }
 
   @Get(':id')
   findOneProduct(@Param('id', ParseIntPipe) id: string) {
-    return `Producto con id ${id}`
+    return `Producto con id ${id}`;
   }
 
   @Patch(':id')
   updateProduct(@Param('id', ParseIntPipe) id: string, @Body() body: any) {
-    return `Actualiza producto con id ${id}`
+    return `Actualiza producto con id ${id}`;
   }
 
   @Delete(':id')
   deleteProduct(@Param('id', ParseIntPipe) id: string) {
-    return `Elimina producto con id ${id}`
+    return `Elimina producto con id ${id}`;
   }
 }
