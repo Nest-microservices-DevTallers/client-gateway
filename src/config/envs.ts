@@ -4,8 +4,8 @@ import 'dotenv/config';
 interface EnvVars {
   PORT: number;
 
-  PRODUCTS_MICROSERVICE_HOST: string
-  PRODUCTS_MICROSERVICE_PORT: number
+  PRODUCTS_MICROSERVICE_HOST: string;
+  PRODUCTS_MICROSERVICE_PORT: number;
 }
 
 const envSchema = Joi.object({
@@ -25,5 +25,5 @@ export const envs = {
   port: envVars.PORT,
 
   productsMicroserviceHost: envVars.PRODUCTS_MICROSERVICE_HOST,
-  productsMicroservicePort: envVars.PRODUCTS_MICROSERVICE_PORT
+  productsMicroservicePort: envVars.PRODUCTS_MICROSERVICE_PORT,
 };
