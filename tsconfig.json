@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@products/*": ["src/products/*"],
+      "@orders/*": ["src/orders/*"],
       "@common/*": ["src/common/*"],
       "@server/*": ["src/*"]
     }
