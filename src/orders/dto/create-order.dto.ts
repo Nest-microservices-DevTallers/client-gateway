@@ -1,32 +1,16 @@
 import { Type } from 'class-transformer';
 import {
-  IsPositive,
-  IsOptional,
-  IsBoolean,
-  IsNumber,
-  IsString,
-  IsEnum,
+  ValidateNested,
+  ArrayMinSize,
+  IsArray,
 } from 'class-validator';
 
-import { OrderStatusEnum } from '@orders/enum';
+import { OrderItemDto } from './order-item.dto';
 
 export class CreateOrderDto {
-  @Type(() => Number)
-  @IsPositive()
-  @IsNumber()
-  totalAmount: number;
-
-  @Type(() => Number)
-  @IsPositive()
-  @IsNumber()
-  totalItems: number;
-
-  @IsEnum(OrderStatusEnum)
-  @IsOptional()
-  @IsString()
-  status?: OrderStatusEnum = OrderStatusEnum.PENDING;
-
-  @IsOptional()
-  @IsBoolean()
-  paid?: boolean = false;
+  @ValidateNested({ each: true })
+  @Type(() => OrderItemDto)
+  @ArrayMinSize(1)
+  @IsArray()
+  items: OrderItemDto[]
 }
