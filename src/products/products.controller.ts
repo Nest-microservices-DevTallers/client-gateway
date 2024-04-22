@@ -14,39 +14,33 @@ import {
 } from '@nestjs/common';
 
 import { CreateProductDto, PaginationDto, UpdateProductDto } from '@common/dto';
-import { PRODUCT_SERVICE } from '@server/config';
+import { NATS_SERVICE } from '@server/config';
 
 @Controller('products')
 export class ProductsController {
-  constructor(
-    @Inject(PRODUCT_SERVICE) private readonly productsClient: ClientProxy,
-  ) {}
+  constructor(@Inject(NATS_SERVICE) private readonly client: ClientProxy) {}
 
   @Post()
   createProduct(@Body() createProductDto: CreateProductDto) {
-    return this.productsClient
-      .send({ cmd: 'create_product' }, createProductDto)
-      .pipe(
-        catchError((err) => {
-          throw new RpcException(err);
-        }),
-      );
+    return this.client.send({ cmd: 'create_product' }, createProductDto).pipe(
+      catchError((err) => {
+        throw new RpcException(err);
+      }),
+    );
   }
 
   @Get()
   findAllProducts(@Query() paginationDto: PaginationDto) {
-    return this.productsClient
-      .send({ cmd: 'find_all_products' }, paginationDto)
-      .pipe(
-        catchError((err) => {
-          throw new RpcException(err);
-        }),
-      );
+    return this.client.send({ cmd: 'find_all_products' }, paginationDto).pipe(
+      catchError((err) => {
+        throw new RpcException(err);
+      }),
+    );
   }
 
   @Get(':id')
   async findOneProduct(@Param('id', ParseIntPipe) id: string) {
-    return this.productsClient.send({ cmd: 'find_one_product' }, { id }).pipe(
+    return this.client.send({ cmd: 'find_one_product' }, { id }).pipe(
       catchError((err) => {
         throw new RpcException(err);
       }),
@@ -70,7 +64,7 @@ export class ProductsController {
   ) {
     try {
       const product = await firstValueFrom(
-        this.productsClient.send(
+        this.client.send(
           { cmd: 'update_product' },
           { id, ...updateProductDto },
         ),
@@ -86,7 +80,7 @@ export class ProductsController {
   async deleteProduct(@Param('id', ParseIntPipe) id: string) {
     try {
       const product = await firstValueFrom(
-        this.productsClient.send({ cmd: 'dele_product' }, { id }),
+        this.client.send({ cmd: 'dele_product' }, { id }),
       );
 
       return product;
