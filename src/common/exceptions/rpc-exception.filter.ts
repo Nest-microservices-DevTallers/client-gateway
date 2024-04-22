@@ -10,6 +10,16 @@ export class ExceptionFilter implements ExceptionFilter {
 
     const rpcError = exception.getError();
 
+    console.log('🐛 ~ ', rpcError.toString());
+
+    if (rpcError.toString().includes('Empty response'))
+      return response.status(500).json({
+        status: 500,
+        message: rpcError
+          .toString()
+          .substring(0, rpcError.toString().indexOf('(') - 1),
+      });
+
     if (
       typeof rpcError === 'object' &&
       'status' in rpcError &&
@@ -19,9 +29,9 @@ export class ExceptionFilter implements ExceptionFilter {
       return response.status(status).json(rpcError);
     }
 
-    return response.status(401).json({
-      status: 401,
-      message: 'Hola mundo, saludo!',
+    return response.status(500).json({
+      status: 500,
+      message: 'Server Error',
     });
   }
 }
