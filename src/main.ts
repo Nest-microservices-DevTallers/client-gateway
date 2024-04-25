@@ -1,4 +1,4 @@
-import { Logger, ValidationPipe, RpcExceptionFilter } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { ExceptionFilter } from '@common/exceptions';
@@ -7,7 +7,7 @@ import { AppModule } from './app.module';
 import { envs } from './config';
 
 async function bootstrap() {
-  const logger = new Logger();
+  const logger = new Logger('ClientGatewayBoostrap');
 
   const app = await NestFactory.create(AppModule);
 

@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 
 import { NatsModule } from '@transports/nats.module';
 
-import { ProductsController } from './products.controller';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [NatsModule],
-  controllers: [ProductsController],
+  controllers: [AuthController],
 })
-export class ProductsModule {}
+export class AuthModule {}
